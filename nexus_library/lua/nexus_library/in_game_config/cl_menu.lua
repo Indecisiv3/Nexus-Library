@@ -563,6 +563,8 @@ function PANEL:SelectItem(addon)
 
         self:CreateLine()
     end
+
+    hook.Run("Nexus:Config:AddonOpened", addon, self.Scroll)
 end
 
 vgui.Register("Nexus:IGC:Menu", PANEL, "EditablePanel")
