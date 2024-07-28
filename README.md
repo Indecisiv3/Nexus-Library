@@ -1,4 +1,4 @@
-![Nexus Library](https://i.imgur.com/niv5KVR.png)
+![Nexus Library](https://i.imgur.com/uHKILoa.png)
 
 ### A New Modern, Unique, Sleek and full of features UI/Misc Library.
 
