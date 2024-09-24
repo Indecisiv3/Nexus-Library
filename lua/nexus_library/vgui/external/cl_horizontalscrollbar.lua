@@ -12,7 +12,7 @@ function PANEL:Init()
 
     self.GripButton = vgui.Create( "DScrollBarGrip", self )
     self.GripButton.Paint = function(s, w, h)
-        draw.RoundedBox(Nexus:Scale(6), 0, 0, w, h, Nexus.Colors.Secondary)
+        draw.RoundedBox(Nexus:Scale(10), 0, 0, w, h, Nexus.Colors.Secondary)
     end
 end
 
@@ -147,7 +147,7 @@ end
 local col = table.Copy(Nexus.Colors.Secondary)
 col.a = 100
 function PANEL:Paint( w, h )
-	draw.RoundedBox(Nexus:Scale(6), 0, 0, w, h, col)
+	draw.RoundedBox(Nexus:Scale(10), 0, 0, w, h, col)
 end
 
 vgui.Register( "Nexus:HorizontalScrollBar", PANEL, "DPanel" )

@@ -3,7 +3,7 @@ local PANEL = {}
 
 function PANEL:Init()
     self.CanvasPanel = vgui.Create( "Panel", self )
-    self.CanvasPanel:DockPadding(0, 0, 0, Nexus:Scale(6))
+    self.CanvasPanel:DockPadding(0, 0, 0, Nexus:Scale(10))
     self.CanvasPanel.OnMousePressed = function( canvasPanel, code )
         canvasPanel:GetParent():OnMousePressed( code )
     end
@@ -15,7 +15,7 @@ function PANEL:Init()
 
     self.Scrollbar = vgui.Create( "Nexus:HorizontalScrollBar", self )
     self.Scrollbar:Dock( BOTTOM )
-    self.Scrollbar:SetTall(Nexus:Scale(12))
+    self.Scrollbar:SetTall(Nexus:Scale(8))
 
     self:SetMouseInputEnabled( true )
 

@@ -1,5 +1,8 @@
 function Nexus:Scale(number)
-    return math.floor(math.max(number*(math.min(ScrH(), 1080)/1440), 1))
+    local val = math.floor(math.max(number*(math.min(ScrH(), 1080)/(1440)), 1))
+    val = val%2 ~= 0 and val + 1 or val
+
+    return val
 end
 
 Nexus.Frame = Nexus.Frame or nil
@@ -98,3 +101,55 @@ function Nexus:StringQuery(title, text, callback)
         frame:Remove()
     end
 end
+
+local gradient = Material("vgui/gradient-d")
+local black = Color(0, 0, 0, 200)
+
+function Nexus:DrawRoundedGradient(x, y, w, h, bgCol, overrideCol, roundness)
+	local col = overrideCol or black
+
+    if Nexus:GetSetting("Nexus-Disable-Gradients", false) then
+        draw.RoundedBox(roundness or Nexus:Scale(10), x, y, w, h-y, bgCol)
+    else
+        w = w % 2 == 0 and w or w + 1
+        h = h % 2 == 0 and h or h + 1
+        Nexus.Masks.Start()
+            surface.SetDrawColor(bgCol.r, bgCol.g, bgCol.b, bgCol.a)
+            surface.DrawRect(x, y, w, h)
+            surface.SetDrawColor(col.r, col.g, col.b, col.a)
+            surface.SetMaterial(gradient)
+            surface.DrawTexturedRectRotated(x + w/2, y + h/2, w, h, 0)
+        Nexus.Masks.Source()
+            draw.RoundedBox(roundness or Nexus:Scale(10), x, y, w, h-y, color_white)
+        Nexus.Masks.End()
+    end
+end
+
+local colCache = {}
+function Nexus:GetTextColor(color)
+    local str = color.r..color.g..color.b
+    if colCache[str] then return colCache[str] end
+   
+    local brightness = (0.299 * color.r) + (0.587 * color.g) + (0.114 * color.b)
+    local col = brightness > 120 and color_black or Nexus.Colors.Text
+    colCache[str] = col
+
+    return col
+end
+
+if not file.Exists("nexus_user_settings.txt", "DATA") then
+    file.Write("nexus_user_settings.txt", util.TableToJSON({}))
+end
+
+local cache = util.JSONToTable(file.Read("nexus_user_settings.txt", "DATA") or "") or {}
+function Nexus:GetSetting(id, default)
+    default = default or false
+    return cache[id] or default
+end
+
+function Nexus:SetSetting(id, value)
+    cache[id] = value
+    file.Write("nexus_user_settings.txt", util.TableToJSON(cache))
+end
+
+Nexus.Colors = Nexus.Themes[Nexus:GetSetting("Nexus-Theme", "Nexus")]

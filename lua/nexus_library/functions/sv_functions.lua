@@ -18,6 +18,7 @@ end
 
 util.AddNetworkString("Nexus:Notification")
 function Nexus:Notify(ply, int, seconds, str)
+    if not IsValid(ply) then return end
     net.Start("Nexus:Notification")
     net.WriteString(str)
     net.WriteUInt(int, 2)
