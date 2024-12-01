@@ -51,6 +51,7 @@ local function GetDirectoryFiles(dir)
     end
 
     for k, v in ipairs(Directory) do
+        if dir..v == "nexus_library/modules" then continue end
         GetDirectoryFiles(dir..v)
     end
 end
@@ -81,4 +82,5 @@ function Nexus:LoadDirectory(dir, loadFirst)
 end
 
 Nexus:LoadDirectory("nexus_library")
+Nexus:LoadDirectory("nexus_library/modules")
 hook.Run("Nexus:Loaded")

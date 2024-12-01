@@ -1,3 +1,4 @@
+// This is a safety net in case the values in game get deleted
 Nexus.Admins = {
     ["superadmin"] = true,
 }
@@ -26,10 +27,10 @@ Nexus.Themes["Halloween"] = {
     ["Secondary"] = Color(100, 50, 150),
     ["Text"] = Color(255, 255, 255),
     ["Outline"] = Color(50, 50, 50),
-    ["Accent"] = Color(255, 165, 0),
+    ["Accent"] = Color(177, 131, 45),
     
     ["Red"] = Color(200, 0, 0),
-    ["Blue"] = Color(75, 0, 130),
+    ["Blue"] = Color(145, 31, 227),
     ["Green"] = Color(50, 205, 50),
     ["Orange"] = Color(255, 130, 0),
     
@@ -43,27 +44,11 @@ Nexus.Themes["Nexus"] = {
     ["Text"] = Color(211, 211, 211),
     ["Outline"] = Color(74, 93, 97),
     ["Accent"] = Color(138, 55, 248),
-    
+   
     ["Red"] = Color(251, 11, 46),
     ["Blue"] = Color(110, 159, 247),
     ["Green"] = Color(24, 199, 24),
     ["Orange"] = Color(255, 150, 10),
 
     ["Header"] = Color(30, 30, 30),
-}
-
-Nexus.Themes["Christmas"] = {
-    ["Background"] = Color(20, 30, 40),
-    ["Primary"] = Color(177, 23, 23), 
-    ["Secondary"] = Color(34, 139, 34),
-    ["Text"] = Color(220, 220, 220), 
-    ["Outline"] = Color(80, 50, 20), 
-    ["Accent"] = Color(184, 134, 11), 
-    
-    ["Red"] = Color(165, 42, 42), 
-    ["Blue"] = Color(70, 130, 180), 
-    ["Green"] = Color(0, 100, 0), 
-    ["Orange"] = Color(210, 105, 30), 
-
-    ["Header"] = Color(50, 20, 30),
 }

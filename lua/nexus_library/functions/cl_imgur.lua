@@ -9,6 +9,7 @@ function Nexus:ParseKey( k )
     return a
 end
 
+// v1 -> v2 use Nexus:GetSetting(id) and Nexus:SetSetting(id, value) instead
 function Nexus:SaveData( sid, path, name, data, bool, format )
     path = ( path or "nexus_datasave" )
     format = format or "dat"
@@ -64,7 +65,7 @@ function Nexus:GetImgur( id )
     end
     http.Fetch( "https://i.imgur.com/" .. id .. ".png", function( b )
         self:SaveData( nil, "nexus", id, b, false, "png" )
-        self.Materials[ id ] = Material( "../data/nexus/" .. id .. ".png", "noclamp smooth" )
+        self.Materials[ id ] = Material( "../data/nexus/" .. id .. ".png")
     end, function( error ) return self:DrawImgur( id ) end )
     return self.Materials[ id ]
 end

@@ -102,8 +102,59 @@ function Nexus:StringQuery(title, text, callback)
     end
 end
 
+function Nexus:Notification(title, text, callback)
+    callback = callback or function() end
+
+    local frame = vgui.Create("Nexus:Frame")
+    frame:SetSize(Nexus:Scale(350), Nexus:Scale(100))
+    frame:Center()
+    frame:SetTitle(title)
+    frame:MakePopup()
+
+    local margin = Nexus:Scale(10)
+    local label = frame:Add("DLabel")
+    label:Dock(FILL)
+    label:SetText(text)
+    label:SetFont(Nexus:GetFont(20))
+    label:SizeToContents()
+    label:SetContentAlignment(5)
+
+    surface.SetFont(Nexus:GetFont(20))
+    local tw, th = surface.GetTextSize(text)
+    tw = tw + Nexus:Scale(40)
+
+    local size = math.max(Nexus:Scale(250), tw)
+    frame:SetWide(size)
+    frame:Center()
+end
+
 local gradient = Material("vgui/gradient-d")
 local black = Color(0, 0, 0, 200)
+
+local blur = Material("pp/blurscreen")
+function Nexus:Blur(panel, layers, density, alpha, w, h)
+    local x, y = panel:LocalToScreen(0, 0)
+
+    surface.SetDrawColor(255, 255, 255, alpha)
+    surface.SetMaterial(blur)
+
+    w = w % 2 == 0 and w or w + 1
+    h = h % 2 == 0 and h or h + 1
+
+    local count = 3
+    for i = 1, count do
+        blur:SetFloat("$blur", (i / count) * 8)
+        blur:Recompute()
+
+        render.UpdateScreenEffectTexture()
+
+        Nexus.Masks.Start()
+            surface.DrawTexturedRect(-x, -y, ScrW(), ScrH())
+        Nexus.Masks.Source()
+            draw.RoundedBox(Nexus:Scale(20), 0, 0, w, h, color_white)
+        Nexus.Masks.End()
+    end
+end
 
 function Nexus:DrawRoundedGradient(x, y, w, h, bgCol, overrideCol, roundness)
 	local col = overrideCol or black
@@ -131,7 +182,7 @@ function Nexus:GetTextColor(color)
     if colCache[str] then return colCache[str] end
    
     local brightness = (0.299 * color.r) + (0.587 * color.g) + (0.114 * color.b)
-    local col = brightness > 120 and color_black or Nexus.Colors.Text
+    local col = brightness > 120 and Nexus.Colors.Background or Nexus.Colors.Text
     colCache[str] = col
 
     return col

@@ -17,7 +17,7 @@ function PANEL:Init()
 		s:DrawTextEntryText(col, col, col)
 
 		if (#s:GetText() == 0) then
-			draw.SimpleText(self:GetPlaceholder() or "", s:GetFont(), 2+self.margin, s:IsMultiline() and self.margin or h / 2, self:GetPlaceholderColor(), self.centerText and 1 or TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+			draw.SimpleText(self:GetPlaceholder() or "", s:GetFont(), 2, s:IsMultiline() and self.margin or h / 2, self:GetPlaceholderColor(), self.centerText and 1 or TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		end
 	end
 	self.TextEntry.OnValueChange = function(s)

@@ -126,6 +126,8 @@ function PANEL:Paint(w, h)
     self.col = self.col or table.Copy(Nexus.Colors.Secondary)
     self.col.a = 30
     Nexus:DrawRoundedGradient(0, 0, w, h, Nexus.Colors.Background, self.col, self.NoRound and 0 or self.round)
+
+//    Nexus:Blur(self, 16, 16, 255, w,)
 end
 
 function PANEL:OnMousePressed()

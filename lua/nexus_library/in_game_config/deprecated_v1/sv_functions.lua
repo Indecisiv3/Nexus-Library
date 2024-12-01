@@ -18,7 +18,7 @@ end
 
 util.AddNetworkString("Nexus:IGC:SelectOption")
 net.Receive("Nexus:IGC:SelectOption", function(len, ply)
-    if not Nexus.Admins[ply:GetUserGroup()] then return end
+    if not Nexus:GetValue("nexus-config-admins")[ply:GetUserGroup()] and not Nexus.Admins[ply:GetUserGroup()] then return end
 
     local addon, id, data = net.ReadString(), net.ReadString(), net.ReadString()
     Nexus.Config.Addons[addon].Options[id].onComplete(data)

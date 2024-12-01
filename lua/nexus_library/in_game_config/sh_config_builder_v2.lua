@@ -24,7 +24,7 @@ function BUILDER:AddLabel(tbl)
     tbl = tbl or {}
     tbl.text = tbl.text or ""
 
-    table.Add(self.Elements, {{id = "label", text = tbl.text, margin = tbl.margin}})
+    table.Add(self.Elements, {{id = "label", text = tbl.text, margin = tbl.margin, size = tbl.size}})
 
     return self
 end
@@ -33,11 +33,72 @@ function BUILDER:AddButtons(tbl)
     tbl = tbl or {}
 
     if tbl.label then
-        self:AddLabel({text = tbl.label, margin = Nexus:Scale(5)})
+        self:AddLabel({text = tbl.label})
     end
 
     table.Add(self.Elements, {{id = "button-row", data = tbl}})
 
+    self:AddLabel({text = ""})
+    return self
+end
+
+function BUILDER:AddTextEntry(tbl)
+    tbl = tbl or {}
+
+    if tbl.label then
+        self:AddLabel({text = tbl.label})
+    end
+
+    table.Add(self.Elements, {{id = "text-entry", data = tbl}})
+
+    self:AddLabel({text = ""})
+    return self
+end
+
+function BUILDER:AddMultiTextEntry(tbl)
+    tbl = tbl or {}
+    tbl.defaultValue = {}
+    for _, v in ipairs(tbl.entries) do
+        tbl.defaultValue[v.id] = v.default
+    end
+
+    if tbl.label then
+        self:AddLabel({text = tbl.label})
+    end
+
+    table.Add(self.Elements, {{id = "multi-text-entry", data = tbl}})
+
+    self:AddLabel({text = ""})
+    return self
+end
+
+function BUILDER:AddKeyTable(tbl)
+    tbl = tbl or {}
+
+    if tbl.label then
+        self:AddLabel({text = tbl.label})
+    end
+
+    table.Add(self.Elements, {{id = "key-table", data = tbl}})
+
+    self:AddLabel({text = ""})
+    return self
+end
+
+function BUILDER:AddTable(tbl)
+    tbl = tbl or {}
+
+    if tbl.label then
+        self:AddLabel({text = tbl.label})
+    end
+
+    if tbl.isPercentage then
+        table.Add(tbl.values, {{id = "Chance", type = "TextEntry", placeholder = "weight", isNumeric = true}})
+    end
+
+    table.Add(self.Elements, {{id = "table", data = tbl}})
+
+    self:AddLabel({text = ""})
     return self
 end
 
@@ -53,25 +114,3 @@ function BUILDER:End()
 end
 
 Nexus.Builder = BUILDER
-
-local addon = Nexus.Builder:Start()
-    :SetName("Leaderboards")
-    :AddLabel({text = "Just a label"})
-
-    :AddButtons({
-        id = "nexus-example-buttonRow",
-        defaultValue = 10,
-        dontNetwork = false, // set to true so things such as db details dont get networked
-
-        label = "Button Row",
-        buttons = {
-            {text = "Button #1", value = 1},
-            {text = "Button #2", value = 2, color = Nexus.Colors.Secondary},
-            {text = "Button #3", value = 3, color = Nexus.Colors.Green},
-            {text = "Long Button #4", value = 4, color = Nexus.Colors.Red},
-        },
-        onChange = function(value)
-            print("Value has been changed", value)
-        end,
-    })
-:End()

@@ -123,31 +123,6 @@ function BASE:AddText(tbl)
     return self
 end
 
-function BASE:AddTextEntry(tbl)
-    tbl = tbl or {}
-    tbl.text = tbl.text or ""
-    tbl.placeholder = tbl.placeholder or ""
-    tbl.margin = tbl.margin or self.margin
-    tbl.onChange = tbl.onChange or function() end
-
-    tbl.size = tbl.size or {}
-    tbl.size.h = tbl.size.h or Nexus:Scale(50)
-
-    local textEntry = (self.Selected.isCategory and self.Selected.Canvas or self.Selected):Add("Nexus:TextEntry")
-    textEntry:Dock(self.Selected.isBlock and LEFT or TOP)
-    textEntry:DockMargin(self.Selected.isBlock and 0 or tbl.margin, self.Selected.isBlock and 0 or tbl.margin, tbl.margin, 0)
-    textEntry:SetText(tbl.text)
-    textEntry:SetPlaceholder(tbl.placeholder)
-    textEntry:SetTall(tbl.size.h)
-    textEntry.OnChange = function(s, val)
-        tbl.onChange(val)
-    end
-
-    table.insert(self.Panels, textEntry)
-
-    return self
-end
-
 function BASE:AddSpacer()
     local spacer = (self.Selected.isCategory and self.Selected.Canvas or self.Selected):Add("DPanel")
     spacer:Dock(TOP)
@@ -327,6 +302,33 @@ function BASE:AddScrollPanel()
     self.Selected = scrollPanel
     self:Update()
     table.insert(self.Panels, scrollPanel)
+
+    return self
+end
+
+function BASE:AddTextEntry(tbl)
+    tbl = tbl or {}
+    tbl.text = tbl.text or ""
+    tbl.placeholder = tbl.placeholder or ""
+    tbl.margin = tbl.margin or self.margin
+    tbl.onChange = tbl.onChange or function() end
+    tbl.isNumeric = tbl.isNumeric or false
+
+    tbl.size = tbl.size or {}
+    tbl.size.h = tbl.size.h or Nexus:Scale(50)
+
+    local textEntry = (self.Selected.isCategory and self.Selected.Canvas or self.Selected):Add("Nexus:TextEntry")
+    textEntry:Dock(self.Selected.isBlock and LEFT or TOP)
+    textEntry:DockMargin(self.Selected.isBlock and 0 or tbl.margin, self.Selected.isBlock and 0 or tbl.margin, tbl.margin, 0)
+    textEntry:SetText(tbl.text)
+    textEntry:SetPlaceholder(tbl.placeholder)
+    textEntry:SetTall(tbl.size.h)
+    textEntry:SetNumeric(tbl.isNumeric)
+    textEntry.OnChange = function(s, val)
+        tbl.onChange(val)
+    end
+
+    table.insert(self.Panels, textEntry)
 
     return self
 end

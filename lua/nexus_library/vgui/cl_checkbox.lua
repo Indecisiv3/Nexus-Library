@@ -80,6 +80,6 @@ function PANEL:AutoWide()
 end
 
 function PANEL:Paint(w, h)
-    draw.SimpleText(self:GetText(), self.font, self.Button:GetWide() + self.margin, h/2, Color(209, 209, 209), 0, 1)
+    draw.SimpleText(self:GetText(), self.font, self.Button:GetWide() + self.margin, h/2, Nexus.Colors.Text, 0, 1)
 end
 vgui.Register("Nexus:CheckBox", PANEL, "EditablePanel")
